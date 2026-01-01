@@ -1,5 +1,17 @@
-
+#Game 
 command to run the pygame env: source ~/pygame-env/bin/activate
 
 To run the game run: python main.py
+
+
+#git basic
+git status -- To see what changes have been made
+git add . -- To add all the file in git
+git commit -m "what changes i made" -- To push the changes and review state
+git push -- To push into github
+git log -- Helpful check
+
+FLOW
+edit -> add -> commit -> push
+
 
