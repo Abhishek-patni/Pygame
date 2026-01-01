@@ -57,10 +57,13 @@ class Game:
 
     def update(self, real_dt):
         # Decide if time should flow based on player intent
-        if self.player.is_moving():
-            self.time.normal()   # Allow time to flow
+        # Decide how time should behave
+        if self.player.dashing:
+            self.time.surge()        # Dash → time surge
+        elif self.player.is_moving():
+            self.time.normal()       # Movement → normal time
         else:
-            self.time.freeze()   # Freeze time
+            self.time.freeze()       # Still → freeze time
 
         # Convert real time into game-controlled time
         game_dt = self.time.update(real_dt)

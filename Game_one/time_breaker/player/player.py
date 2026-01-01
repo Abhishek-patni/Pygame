@@ -9,10 +9,33 @@ class Player:
         self.pos = pygame.Vector2(x, y)
         self.size = 20
         self.speed = 300
-    # Update the value
+        # Dash properties
+        self.dashing = False          # Is player currently dashing?
+        self.dash_time = 0.0          # Time spent in dash
+        self.dash_duration = 0.15     # Dash lasts 0.15 seconds
+        self.dash_cooldown = 0.5      # Cooldown before next dash
+        self.cooldown_timer = 0.0     # Time since last dash
+        self.base_speed = self.speed # Store normal speed
 
+    # Update the value
     def update(self, dt):
         keys = pygame.key.get_pressed()
+        # Update dash cooldown timer
+        if self.cooldown_timer > 0:
+            self.cooldown_timer -= dt
+        # Start dash if SPACE is pressed and cooldown is ready
+        if keys[pygame.K_SPACE] and self.cooldown_timer <= 0 and not self.dashing:
+            self.dashing = True                 # Enter dash state
+            self.dash_time = 0.0                # Reset dash timer
+            self.speed = self.base_speed * 3    # Increase movement speed
+            self.cooldown_timer = self.dash_cooldown
+        # If currently dashing
+        if self.dashing:
+            self.dash_time += dt
+            if self.dash_time >= self.dash_duration:
+                self.dashing = False             # End dash
+                self.speed = self.base_speed     # Restore normal speed
+        # Normal movement logic
         direction = pygame.Vector2(
             keys[pygame.K_d] - keys[pygame.K_a],
             keys[pygame.K_s] - keys[pygame.K_w]
