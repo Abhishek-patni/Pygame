@@ -1,0 +1,5 @@
+
+command to run the pygame env: source ~/pygame-env/bin/activate
+
+To run the game run: python main.py
+
